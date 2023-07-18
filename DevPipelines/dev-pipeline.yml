@@ -1,0 +1,39 @@
+# DevPipeline
+trigger:
+- main
+
+#pipeline execution agent
+pool:
+  name: agent-name-pool
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: AzDevOps-Team-Projets/repository-templates
+      ref: 'main'
+
+#padrão de nomeclatura rg-<nome do projeto com a sigla em 3 letras>-<ambiente>
+#No cenário atual
+
+extends:
+  template: azure-pipelines.yml@templates
+  parameters:
+      subscription-id: 'id da subscription a ser feito o deploy'
+      sigla_sistema: 'rg-operacoes'
+      location: 'brazilsouth'
+      vnets: 'operacoesvnet'
+      subnet-pv: 'operacoessubnet'
+      subnet-apim: 'operacoessubnetapim'
+      subnet-aks: 'operacoessubnetaks'
+      subnet-appgw: 'operacoessubnetappgw'
+      storage_account_name:  'operacoesstorage'
+      apim_name: 'operacoesapim'
+      acr_operacoes: 'operacoesacr'
+      redis_name: 'operacoesredis'
+      aks_name: 'aksoperinteligentes'
+      app_gateway: 'appgatewayoper'
+      sql_server: 'sqlserveroperacoes'
+      sql_database: 'sqldboperacoes'
+      keyvault: 'keyvaultoperacoes'
+      service_bus: 'servicebusoperacoes'
