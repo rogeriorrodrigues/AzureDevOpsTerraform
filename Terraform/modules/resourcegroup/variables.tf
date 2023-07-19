@@ -1,10 +1,9 @@
 variable "resourcegroup" {
-  description = "Name of the Azure Resource Group"
+  description = "Azure Resource Group configurations"
   type        = list(object({
     name     = string
     location = string
     tags     = map(string)
   }))
+  default     = []
 }
-
-
