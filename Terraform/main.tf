@@ -28,7 +28,7 @@ resource "azurerm_subnet" "apimsubnet" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.21.0.0/24"]
-  depends_on          = [azurerm_resource_group.rg]
+  depends_on           = [azurerm_resource_group.rg]
 }
 
 resource "azurerm_subnet" "appgwsubnet" {
@@ -36,7 +36,7 @@ resource "azurerm_subnet" "appgwsubnet" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.21.1.0/24"]
-  depends_on          = [azurerm_resource_group.rg]
+  depends_on           = [azurerm_resource_group.rg]
 }
 
 resource "azurerm_subnet" "akssubnet" {
@@ -44,7 +44,7 @@ resource "azurerm_subnet" "akssubnet" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.21.2.0/24"]
-  depends_on          = [azurerm_resource_group.rg]
+  depends_on           = [azurerm_resource_group.rg]
 }
 
 resource "azurerm_subnet" "pvsubnet" {
@@ -52,7 +52,7 @@ resource "azurerm_subnet" "pvsubnet" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.21.3.0/24"]
-  depends_on          = [azurerm_resource_group.rg]
+  depends_on           = [azurerm_resource_group.rg]
 }
 
 resource "azurerm_public_ip" "pip" {
@@ -88,13 +88,13 @@ module "storage" {
 
 //private link
 module "privatelink" {
-  source              = "./modules/privatelink"
-  name                = "pllcepiloto"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = "brazilsouth"
-  subnet_id           = azurerm_subnet.pvsubnet.id
-  load_balancer_frontend_ip_configuration_ids               = [azurerm_lb.loadbalancer.frontend_ip_configuration.0.id]
-  depends_on          = [azurerm_resource_group.rg]
+  source                                      = "./modules/privatelink"
+  name                                        = "pllcepiloto"
+  resource_group_name                         = azurerm_resource_group.rg.name
+  location                                    = "brazilsouth"
+  subnet_id                                   = azurerm_subnet.pvsubnet.id
+  load_balancer_frontend_ip_configuration_ids = [azurerm_lb.loadbalancer.frontend_ip_configuration.0.id]
+  depends_on                                  = [azurerm_resource_group.rg]
 }
 
 //app gateway
@@ -114,7 +114,7 @@ module "keyvault" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = "brazilsouth"
   tenant_id           = "tennant-id"
-  depends_on               = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.rg]
 }
 
 //service bus
@@ -123,22 +123,22 @@ module "servicebus" {
   name                = "sb-sil-lce-piloto"
   resource_group_name = azurerm_resource_group.rg.name
   location            = "brazilsouth"
-  depends_on               = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.rg]
 }
 
 //sql server
 module "sqldatabase" {
   source              = "./modules/sqldatabase"
-  sql_server_name                = "sqlsilcepiloto"
+  sql_server_name     = "sqlsilcepiloto"
   resource_group_name = azurerm_resource_group.rg.name
   location            = "brazilsouth"
   sql_version         = "12.0"
   sql_db_name         = "sqldb-sil-lce-piloto"
   admin_username      = "sqladmin"
   admin_password      = "P@ssw0rd123456"
-  depends_on               = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.rg]
 }
-  
+
 //acr
 module "acr" {
   source              = "./modules/acr"
@@ -146,7 +146,7 @@ module "acr" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = "brazilsouth"
   sku_name            = "Basic"
-  depends_on               = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.rg]
 }
 
 //exemplo teste aks
@@ -155,7 +155,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location            = "brazilsouth"
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = "aks-lce-piloto"
-  depends_on               = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.rg]
 
   default_node_pool {
     name       = "default"
@@ -172,7 +172,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "mem" {
   name                  = "mem"
   node_count            = "2"
   vm_size               = "standard_d11_v2"
-  
+
 }
 
 //apim
@@ -181,7 +181,7 @@ module "apim_service" {
   apim_name           = "apim-sil-lce-piloto"
   resource_group_name = azurerm_resource_group.rg.name
   location            = "brazilsouth"
-  depends_on               = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.rg]
 }
 
 //Redis
@@ -190,7 +190,7 @@ module "redis" {
   redis_name          = "redis-sil-lce-piloto"
   resource_group_name = azurerm_resource_group.rg.name
   location            = "brazilsouth"
-  depends_on               = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.rg]
 }
 
 

@@ -1,36 +1,32 @@
 resource "azurerm_api_management" "apim_service" {
-  name                = var.apim_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  publisher_name      = "Rogério Rodrigues"
-  publisher_email     = "rrodrigues@microsoft.com"
-  sku_name            = "Developer_1"
-  tags = {
-    Environment = "dev"
-  }
+  count              = length(var.apim)
+  name                = local.create_apim[count.index]
+  location            = var.apim[count.index].location
+  resource_group_name = var.apim[count.index].resource_group_name
+  publisher_name      = var.apim[count.index].publisher_name
+  publisher_email     = var.apim[count.index].publisher_email
+  sku_name            = var.apim[count.index].sku_name
+  tags = var.apim[count.index].tags
+
   policy {
-    xml_content = <<XML
-    <policies>
-      <inbound />
-      <backend />
-      <outbound />  
-      <on-error />
-    </policies>
-XML
+    xml_content = var.apim[count.index].policy
+
+  }
+
+}
+
+resource "azurerm_api_management_api" "api" {
+  count               = length(var.apim)
+  name                = local.create_apim[count.index]
+  resource_group_name = var.apim[count.index].resource_group_name
+  api_management_name = local.create_apim[count.index]
+  revision            = local.revision[count.index]
+  display_name        = local.create_apim[count.index]
+  path                = var.apim[count.index].path
+  protocols           = var.apim[count.index].protocols
+  description         = var.apim[count.index].description
+  import {
+    content_format = var.apim[count.index].import.content_format
+    content_value  = var.apim[count.index].import.content_value
   }
 }
-//Definir regras para publicacao de API do LCE
-/*resource "azurerm_api_management_api" "api" {
-  name                = "conference-api"
-  resource_group_name = var.resource_group_name
-  api_management_name = var.apim_name
-  revision            = "1"
-  display_name        = "conference-api"
-  path                = "example"
-  protocols           = ["https", "http"]
-  description         = "An example API"
-  import {
-    content_format = "swagger-link-json"
-    content_value  = "http://conferenceapi.azurewebsites.net/?format=json"
-  }
-}*/

@@ -1,42 +1,43 @@
-variable "name" {
-  type        = string
-  description = "aks name"
-  default     = "piloto-aks"
-}
 
-variable "environment" {
-  type        = string
-  description = "Name of the deployment environment"
-  default     = "dev"
-}
-
-// Resource information
-
-variable "location" {
-  type        = string
-  description = "Location of the azure resource group."
-  default     = "EastUS"
-}
-
-variable "resource_group_name" {
-  type        = string
-  description = "Name of the azure resource group."
-  default     = "piloto-rg"
-}
+variable "aks" {
+    description = "Azure Kubernetes Service configurations"
+    type = list(object({
+        name                              = string
+        location                          = string
+        resource_group_name               = string
+        dns_prefix                        = string
+        role_based_access_control_enabled = bool
+        kubernetes_version              = string
+        min_count                       = string
+        max_count                       = string
+        max_pod                      = string
+        enable_auto_scaling             = string
+        default_node_pool = map(string)
+        #identity = map(string)
+        service_principal = map(string)
+        node_count = string
+        node_type = string
+        environment = string
+        is_private_cluster = string
+        dns_prefix = string
+        dns_prefix_private_cluster = string
+        network_profile = object({
+            network_plugin = string
+            network_policy = string
+            dns_service_ip = string
+            docker_bridge_cidr = string
+            pod_cidr = string
+            service_cidr = string
+        })
+    }))
+    default = []
   
-// Node type information
-
-variable "node_count" {
-  type        = string
-  description = "The number of K8S nodes to provision."
-  default     = 3
 }
 
-variable "node_type" {
-  type        = string
-  description = "The size of each node."
-  default     = "Standard_D2s_v3"
-}
+
+
+
+
 
 variable "dns_prefix" {
   type        = string

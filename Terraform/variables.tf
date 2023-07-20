@@ -1,5 +1,5 @@
 variable "sigla_caixa" {
-  description = "Specifies the system"            
+  description = "Specifies the system"
   default     = "lce"
   type        = string
 }

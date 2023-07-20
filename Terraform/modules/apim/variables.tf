@@ -1,16 +1,30 @@
        
-variable "resource_group_name" {
-  description = "(Required) Specifies the resource group name of the storage account"
-  type        = string
+
+variable "apim" {
+    description = "Azure API Management configurations"
+    type = list(object({
+        name                  = string
+        location              = string
+        resource_group_name   = string
+        publisher_name        = string
+        publisher_email       = string
+        sku_name              = string
+        tags                  = map(string)
+        policy                = string
+        custom_property       = map(string)
+        identity              = map(string)
+        create_email_template = bool
+        path                  = string
+        protocols             = list(string)
+        description           = string
+        policy                = string
+        import                = map(string)
+    }))
+    default = []
+
+  
 }
 
-variable "location" {
-  description = "The Azure Region in which all resources in this example should be created."
-}
 
-variable "apim_name" {
-    type = string
-    description = "APIM name"
-}
 
 
