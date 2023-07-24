@@ -1,0 +1,6 @@
+[0m[1mdata.azurerm_client_config.current: Reading...[0m[0m
+[0m[1mdata.azurerm_client_config.current: Read complete after 0s [id=Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9NmIzNjZhY2UtNjcyNS00MzVkLWI0NDEtZDY0OGIyZjA0ODg1O3N1YnNjcmlwdGlvbklkPWIxMjNkNjcxLTAwZjYtNDYxZi05MDY1LWU4MDU4N2JmYmMzNTt0ZW5hbnRJZD0yYWQ4OWRjOC1lY2ZlLTQ3ZjQtODk3MS0zYjIwOGYwYWI3YmQ=][0m
+
+[0m[1m[31mPlanning failed.[0m[1m Terraform encountered an error while generating this plan.[0m
+
+[0m
